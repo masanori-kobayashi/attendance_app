@@ -4,6 +4,13 @@ module AttendancesHelper
     # 受け取ったAttendanceオブジェクトが当日と一致するか評価します。
     if Date.current == attendance.worked_on
       return '出勤' if attendance.started_at.nil?
+    end
+    false
+  end
+  
+  def attendance_state_leaving(attendance)
+    # 受け取ったAttendanceオブジェクトが当日と一致するか評価します。
+    if Date.current == attendance.worked_on
       return '退勤' if attendance.started_at.present? && attendance.finished_at.nil?
     end
     false
