@@ -21,9 +21,21 @@
 </div>
 
 <div class="btn-users-show">
-  <%= link_to "勤怠編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-success" %>
-  <%= link_to "CSV出力", "#", class: "btn btn-success" %>
-  <%= link_to "勤怠修正ログ（承認済）", "#", class: "btn btn-success" %>
+  <div class="btn-users-show-button">
+    <%= link_to "勤怠編集", attendances_edit_one_month_user_path(date: @first_day), class: "btn btn-success" %>
+    <%= link_to "CSV出力", "#", class: "btn btn-success" %>
+  </div>
+  <div class="btn-users-show-button">
+    <%= link_to "勤怠修正ログ（承認済）", "#", class: "btn btn-success" %>
+  </div>
+</div>
+
+<div class="btn-users-show">
+  <% if current_user.instructor? %>
+    <li><%= link_to "【所属長承認申請のお知らせ】","#" %></li>
+    <li><%= link_to "【勤怠変更申請のお知らせ】","#" %></li>
+    <li><%= link_to "【残業申請のお知らせ】","#" %></li>
+  <% end %>
 </div>
 
 <div>

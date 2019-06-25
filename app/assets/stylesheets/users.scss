@@ -7,9 +7,19 @@
 
 /* ユーザー情報下ボタン */
 
-.btn-users-show {
-  margin-top: -10px;
+.btn-users-show{
+  padding-top: 0px;
   margin-bottom: 10px;
+  display: inline-block;
+  width: 200px;
+  li {
+    list-style: none;
+  }
+}
+
+.btn-users-show-button {
+  padding-top: 0px;
+  margin-bottom: 5px;
 }
 
 /* ユーザー勤怠情報テーブル */
