@@ -6,12 +6,36 @@
   <h1>ユーザー一覧</h1>
 <% end %>
 
+<% if flash[:notice] %>
+  <div class="alert alert-info" role="alert"><%= flash[:notice] %></div>
+<% end %>
+
+<div class="pull-left">
+  <%= form_tag users_path, method: :post, multipart: true do |f| %>
+    <div class="search_item">
+      <%= button_tag 'ファイル選択', class: %i(btn-secondry csv_input_btn), type: 'button', onclick: "$('#file_input').click();" %>
+      <%= text_field_tag 'filename',"", id: "filename", disabled: true %>
+      <%= file_field_tag 'users_file', id: "file_input", style: "display: none;", onchange: "file_selected($(this));" %>
+    </div>
+    <div class="CSV-imp">
+      <button style="width:275px" type="submit" class="btn btn-primary btn-sm">CSVインポート</button>
+    </div>
+  <% end %>
+</div>
+
+<script type="text/javascript">
+  function file_selected(file_field){
+    var filename = $(file_field)[0].files[0].name;
+    $("#filename").val(filename);
+  }
+</script>
+
 <div class="pull-right">
   <%= form_tag(users_path, method: "get") do %>
     <div class="col-sm-9">
       <%= label_tag :name, "ユーザー名検索" %>
       <%= text_field_tag :name,params[:name] %>
-      <%= submit_tag "検索", class: "btn btn-primary"  %>
+      <%= submit_tag "検索", class: "btn btn-primary btn-sm" %>
     </div>
   <% end %>
 </div>
