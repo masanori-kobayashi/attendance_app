@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190624051936) do
+ActiveRecord::Schema.define(version: 20190626114502) do
 
   create_table "attendances", force: :cascade do |t|
     t.date "worked_on"
@@ -32,9 +32,13 @@ ActiveRecord::Schema.define(version: 20190624051936) do
     t.string "remember_digest"
     t.boolean "admin", default: false
     t.string "department"
-    t.datetime "basic_time", default: "2019-06-23 23:00:00"
-    t.datetime "work_time", default: "2019-06-23 22:30:00"
+    t.datetime "basic_time", default: "2019-06-25 23:00:00"
+    t.datetime "work_time", default: "2019-06-25 22:30:00"
     t.boolean "instructor", default: false
+    t.string "employee_number"
+    t.string "uid"
+    t.datetime "designated_work_start_time", default: "2019-06-26 00:00:00"
+    t.datetime "designated_work_end_time", default: "2019-06-26 08:00:00"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
