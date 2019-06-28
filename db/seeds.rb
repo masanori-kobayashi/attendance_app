@@ -14,7 +14,7 @@ User.create!(name: "上長１",
              password_confirmation: "password",
              employee_number: "2",
              uid: "2",
-             instructor: true)
+             superior: true)
              
 User.create!(name: "上長２",
              email: "sample2@email.com",
@@ -22,7 +22,7 @@ User.create!(name: "上長２",
              password_confirmation: "password",
              employee_number: "3",
              uid: "3",
-             instructor: true)
+             superior: true)
              
 User.create!(name: "上長３",
              email: "sample3@email.com",
@@ -30,7 +30,7 @@ User.create!(name: "上長３",
              password_confirmation: "password",
              employee_number: "4",
              uid: "4",
-             instructor: true)
+             superior: true)
 
 60.times do |n|
   name  = Faker::Name.name

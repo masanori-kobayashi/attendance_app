@@ -5,13 +5,13 @@
       <td style="width:100px"><%= link_to "⇦", user_path(date: @first_day.prev_month), class: "btn btn-info" %></td>
       <td>【<%= l(@first_day, format: :middle) %>】時間管理表</td>
       <td style="width:100px"><%= link_to "⇨", user_path(date: @first_day.next_month), class: "btn btn-info" %></td>
-      <td colspan="2">指定勤務時間 : <%= format_basic_info(@user.work_time) %></td>
-      <td>基本時間 : <%= format_basic_info(@user.basic_time) %></td>
+      <td colspan="2">指定勤務時間 : <%= format_basic_info(@user.basic_work_time) %></td>
+      <td>基本時間 : <%= format_basic_info(@user.basic_work_time) %></td>
       <td>月初日 : <%= l(@first_day, format: :short) %></td>
     </tr>
 
     <tr>
-      <td colspan="3">所属 : <%= @user.department.present? ? @user.department : "未所属" %></td>
+      <td colspan="3">所属 : <%= @user.affiliation.present? ? @user.affiliation : "未所属" %></td>
       <td>氏名 : <%= @user.name %></td>
       <td>コード : <%= @user.employee_number %></td>
       <td>出勤日数 : <%= @worked_sum %>日</td>
@@ -31,7 +31,7 @@
 </div>
 
 <div class="btn-users-show">
-  <% if current_user.instructor? %>
+  <% if current_user.superior? %>
     <li><%= link_to "【所属長承認申請のお知らせ】","#" %></li>
     <li><%= link_to "【勤怠変更申請のお知らせ】","#" %></li>
     <li><%= link_to "【残業申請のお知らせ】","#" %></li>
@@ -134,7 +134,7 @@
       </tr>
       <tr>
         <td colspan="3"><%= @attendances.count %></td>
-        <td colspan="4"><%= format_basic_info(@user.work_time).to_f * @worked_sum %></td>
+        <td colspan="4"><%= format_basic_info(@user.basic_work_time).to_f * @worked_sum %></td>
         <td colspan="2"><%= format("%.2f", @total_working_times.to_f) %></td>
       </tr>
     </tfoot>   
