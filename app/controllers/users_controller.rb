@@ -11,6 +11,18 @@ class UsersController < ApplicationController
       @users = @users.get_by_name params[:name]
     end
   end
+  
+  def import
+   # fileはtmpに自動で一時保存される
+   if params[:file].blank?
+     flash[:danger] = "インポートするCSVファイルを選択してください。"
+     redirect_to users_url
+   else
+     User.import(params[:file])
+     flash[:success] = "CSVファイルをインポートしました。"
+     redirect_to users_url
+   end
+  end
 
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
@@ -64,11 +76,13 @@ class UsersController < ApplicationController
   private
 
     def user_params
-      params.require(:user).permit(:name, :email, :department, :password, :password_confirmation)
+      params.require(:user).permit(:name, :email, :affiliation, :password, :password_confirmation)
     end
 
     def basic_info_params
-      params.require(:user).permit(:name, :email, :department, :employee_number, :uid, :password, :password_confirmation,
+      params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :password, :password_confirmation,
                                    :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
+    
+    
 end
