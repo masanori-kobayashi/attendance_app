@@ -72,6 +72,13 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
+  
+  def attendance_within_employee
+    @working_users = User.all.includes(:attendances)
+    .where(attendances: {worked_on: Date.today})
+    .where.not(attendances: {started_at: nil?})
+    .where(attendances: {finished_at: nil})
+  end
 
   private
 
@@ -83,6 +90,7 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :affiliation, :employee_number, :uid, :password, :password_confirmation,
                                    :basic_work_time, :designated_work_start_time, :designated_work_end_time)
     end
-    
-    
 end
+
+#@working_users = Attendance.where(started_at: present?).where(finished_at: nil?) && Date.today
+
