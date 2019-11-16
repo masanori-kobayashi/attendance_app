@@ -92,5 +92,3 @@ class UsersController < ApplicationController
     end
 end
 
-#@working_users = Attendance.where(started_at: present?).where(finished_at: nil?) && Date.today
-

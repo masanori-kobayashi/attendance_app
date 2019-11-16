@@ -58,10 +58,8 @@
 
 /* ユーザー一覧ページ */
 
-#table-users {
-  td {
-    vertical-align: middle;
-  }  
+.users-list-name {
+  margin-top: 30px;
 }
 
 /* 基本情報編集モーダルウインドウ */

@@ -1,4 +1,6 @@
 <% provide(:title, 'All Users') %>
+<% provide(:class_text, 'basic-info') %>
+<% provide(:button_text, '更新') %>
 
 <% if params[:name].present? %>
   <h1>検索結果</h1>
@@ -26,45 +28,29 @@
 
 <div class="col-md-10 col-md-offset-1">
   <%= will_paginate %>
-  <table class="table table-condensed table-hover" id="table-users">
-    <thead>
-      <tr>
-        <th><%= User.human_attribute_name :name %></th>
-        <th class="center"><%= User.human_attribute_name :affiliation %></th>
-        <% if current_user.admin? %>
-          <th class="center"><%= User.human_attribute_name :basic_work_time %></th>
-        <% end %>
-        <th></th>
-      </tr>
-    </thead>
 
     <% @users.each do |user| %>
-      <tr>
-        <td>
-          <% if current_user.admin? %>
-            <%= link_to user.name, user %>
-          <% else %>
-            <%= user.name %>
-          <% end %>
-        </td>
-        <td class="center"><%= user.affiliation.present? ? user.affiliation : "未所属" %></td>
+      <div class="users-list-name">
         <% if current_user.admin? %>
-          <td class="center"><%= format_basic_info(user.basic_work_time) %></td>
+          <%= link_to user.name, user %>
+        <% else %>
+          <%= user.name %>
         <% end %>
-        <td class="center">
-          <% if current_user.admin? && !current_user?(user) %>
-            <%= link_to "編集", edit_basic_info_user_path(user), 
-                remote: true, class: "btn btn-success" %>
-            <%= link_to "削除", user, method: :delete,
-                data: { confirm: "削除してよろしいですか？" },
-                class: "btn btn-danger" %>
-          <% end %>
-        </td>
-      </tr>
+      </div>
+      <div>
+        ｜<%= link_to "削除", user, method: :delete,data: { confirm: "削除してよろしいですか？" },class: "btn btn-primary" %>
+      </div>
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <button type="button" class="btn btn-primary btn-lg" data-toggle="collapse" data-target="#acdn<%= user.id %>" data-parent="#accordion" >編集</button>
+              <span id="acdn<%= user.id %>" class="panel-collapse collapse in">
+                <%= render 'edit_basic_info', user: user %>
+              </span>
+          </div>
+        </div>
+      </div>
     <% end %>
-  </table>
+ 
   <%= will_paginate %>
 </div>
-
-<!--モーダルウインドウ表示-->
-<div id="edit-basic-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
