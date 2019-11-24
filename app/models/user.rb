@@ -49,10 +49,12 @@ class User < ApplicationRecord
     update_attribute(:remember_digest, nil)
   end
   
+  # CSVインポート
   def self.import(file)
-   CSV.foreach(file.path, headers: true) do |row|
+    # return if file.blank?
+    CSV.foreach(file.path, headers: true) do |row|
      # emailが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
-     user = find_by(email: row["emial"]) || new
+     user = find_by(email: row["email"]) || new
      # CSVからデータを取得し、設定する
      user.attributes = row.to_hash.slice(*updatable_attributes)
      # 保存する

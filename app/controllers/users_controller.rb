@@ -1,3 +1,5 @@
+#require 'csv'
+
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
@@ -28,10 +30,11 @@ class UsersController < ApplicationController
     @worked_sum = @attendances.where.not(started_at: nil).count
   end
 
+    
   def new
     @user = User.new
   end
-
+    
   def create
     @user = User.new(user_params)
     if @user.save
