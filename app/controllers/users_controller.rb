@@ -1,5 +1,3 @@
-#require 'csv'
-
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
@@ -28,6 +26,37 @@ class UsersController < ApplicationController
 
   def show
     @worked_sum = @attendances.where.not(started_at: nil).count
+    
+    respond_to do |format|
+      format.html
+      format.csv do |format|
+        send_attendances_csv(@attendances)
+      end
+    end
+  end
+
+  def send_attendances_csv(attendances)
+    csv_data = CSV.generate do |csv|
+      header = %w(日付 出社時間 退社時間)
+      csv << header
+      
+      attendances.each do |attendance|
+        values = [attendance.worked_on,
+                  if attendance.started_at.nil?
+                    attendance.started_at
+                  else 
+                    l(attendance.started_at,format: :time)
+                  end,
+                  if attendance.finished_at.nil?
+                    attendance.finished_at
+                  else
+                    l(attendance.finished_at,format: :time)
+                  end
+                  ]
+        csv << values
+      end
+    end
+    send_data(csv_data, filename: "attendances.csv")
   end
 
     
